@@ -141,6 +141,14 @@ class Concert(object):
         while self.driver.title.find('确认订单') == -1:  # 如果跳转到了确认界面就算这步成功了，否则继续执行此步
             self.num += 1 # 记录抢票轮数
 
+
+            try:
+                popup = self.driver.find_element_by_class_name('realname-popup')
+                button = popup.find_element_by_xpath('div/div[3]/div[2]')
+                button.click()
+            except:
+                print("###不存在弹窗###")
+
             if self.date != 0: # 如果需要选择日期
                 calendar = WebDriverWait(self.driver, self.total_wait_time, self.refresh_wait_time).until(
                     EC.presence_of_element_located((By.CLASS_NAME, "functional-calendar")))
@@ -227,7 +235,8 @@ class Concert(object):
 
             elif buybutton_text == "提交缺货登记":
                 print('###抢票失败，请手动提交缺货登记###')
-                break
+                self.driver.refresh()
+                continue
 
 
     def choose_ticket_2(self):  # for type 2, i.e., piao.damai.cn
