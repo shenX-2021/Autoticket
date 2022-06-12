@@ -1,5 +1,5 @@
 
 
 .idea/
-./chromedriver
-./cookies.pkl
+chromedriver
+cookies.pkl
